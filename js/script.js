@@ -147,14 +147,16 @@ const gameLoop = () => {
     drawGrid()
     moveSnake()
     drawsnake()
+    canChangeDirection = true
     LoopId = setTimeout(() => {
         gameLoop()
-    },160)
+    },150)
 }
 
 gameLoop()
 
 document.addEventListener("keydown",({key}) =>{
+    if (!canChangeDirection) return
     if (key == "ArrowRight" && direction != "left") {
         direction = "right" 
     
@@ -173,6 +175,6 @@ document.addEventListener("keydown",({key}) =>{
 }
     
     
-    
+canChangeDirection = false   
 
 })
