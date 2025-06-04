@@ -149,7 +149,7 @@ const gameLoop = () => {
     drawsnake()
     LoopId = setTimeout(() => {
         gameLoop()
-    },10)
+    },160)
 }
 
 gameLoop()
