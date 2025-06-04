@@ -6,6 +6,14 @@ const finalscore = document.querySelector(".final-score > span")
 const menu = document.querySelector(".menu-screen")
 const buttonPlay = document.querySelector(".btn-play")
 
+const appleImage = new Image()
+appleImage.src = "image/apple.png"
+
+appleImage.onload = () => {
+    gameLoop()
+}
+
+
 const size = 30
 
 let snake = [
@@ -20,16 +28,15 @@ const randomPosition = () =>{
     const number = randomNumber(0,canvas.width - size)
     return Math.round(number/30)*30
 }
-const randomColor = () => {
-    const red = randomNumber(0,255)
-    const green = randomNumber(0,255)
-    const blue = randomNumber(0,255)
-    return `rgb(${red},${green},${blue})`
-}
+// const randomColor = () => {
+//     const red = randomNumber(0,255)
+//     const green = randomNumber(0,255)
+//     const blue = randomNumber(0,255)
+//     return `rgb(${red},${green},${blue})`
+// }
 const food = {
     x:randomPosition(), 
-    y:randomPosition(),
-    color: randomColor()
+    y:randomPosition()
 }
 
 const incrementScore = () => {
@@ -39,13 +46,12 @@ const incrementScore = () => {
 let direction
 let LoopId
 const drawfood = () => {
-    const {x,y,color} = food
-    ctx.shadowColor =color
-    ctx.shadowBlur = 100
-    ctx.fillStyle = food.color
-    ctx.fillRect(food.x,food.y,size,size)
+    ctx.shadowColor = food.color
+    ctx.shadowBlur = 20
+    ctx.drawImage(appleImage, food.x, food.y, size, size)
     ctx.shadowBlur = 0
 }
+
 const drawsnake = () => {
     ctx.fillStyle = "#000099"
     snake.forEach((position,index)=>{
@@ -106,7 +112,7 @@ const checkEat = () =>{
         }
         food.x = x 
         food.y = y
-        food.color = randomColor()
+
     }
 }
 const checkCollision = () => {
@@ -147,6 +153,7 @@ const gameLoop = () => {
     drawGrid()
     moveSnake()
     drawsnake()
+    canChangeDirection = true
     LoopId = setTimeout(() => {
         gameLoop()
     },150)
@@ -155,6 +162,7 @@ const gameLoop = () => {
 gameLoop()
 
 document.addEventListener("keydown",({key}) =>{
+    if (!canChangeDirection) return
     if (key == "ArrowRight" && direction != "left") {
         direction = "right" 
     
@@ -173,6 +181,6 @@ document.addEventListener("keydown",({key}) =>{
 }
     
     
-    
+canChangeDirection = false   
 
 })
