@@ -180,7 +180,7 @@ document.addEventListener("keydown",({key}) =>{
 }
 }
     
-    
+    // 
 canChangeDirection = false   
 
 })
